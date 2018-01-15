@@ -6,52 +6,37 @@
 var stringifyJSON = function(obj) {
   let results = [];
 
+//string
+  if (typeof obj === 'string') {
+    return `"${obj}"`;
+  }
+
+  // if an array
   if (Array.isArray(obj) === true) {
     obj.forEach((elements) => results.push(stringifyJSON(elements)));
     return `[${results.join(',')}]`;
   }
 
+  // if an object or null 
   if (typeof obj === 'object') {
+  // if null
     if (obj === null) {
       return 'null';
-    } else { 
+    // if an object
+    } else {
       for (var key in obj) {
-        if (typeof obj[key] !== 'function' || !obj.hasOwnProperty(undefined)) {
-          results.push(`${stringifyJSON(key)}:${stringifyJSON(obj[key])}`);
+        // if a fucntion or undefined
+        if (typeof obj[key] === 'function' || obj[key] === undefined) {
+          return '{}';
         }
-      }
+        results.push(`${stringifyJSON(key)}:${stringifyJSON(obj[key])}`);
+      }   
       return '{' + results + '}';
     }
   }
+  
+  // else make it a string
+  return '' + obj;
 
-
-  if (typeof obj === 'string') {
-    return `"${obj}"`;
-  }
-
-  if (typeof obj === 'number', 'boolean', 'string') {
-    return '' + obj;
-  }
 
 };
-
-
-
-//    {},
-//   {'a': 'apple'},
-//   {'foo': true, 'bar': false, 'baz': null},
-//   {'boolean, true': true, 'boolean, false': false, 'null': null },
-//   // basic nesting
-//   {'a': {'b': 'c'}},
-//   {'a': ['b', 'c']},
-//   [{'a': 'b'}, {'c': 'd'}],
-//   {'a': [], 'c': {}, 'b': true}
-  // {
-  //   'functions': function() {},
-  //   'undefined': undefined
-  // }
-
-
-
-
-
