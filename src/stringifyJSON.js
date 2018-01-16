@@ -6,7 +6,7 @@
 var stringifyJSON = function(obj) {
   let results = [];
 
-//string
+  //string
   if (typeof obj === 'string') {
     return `"${obj}"`;
   }
